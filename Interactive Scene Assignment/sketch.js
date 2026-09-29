@@ -80,27 +80,34 @@ function draw() {
   keyPressed()
   if (dayNight === 0) {
     background(141, 196, 252);
+      // sun/moon
+  let s = color(250, 241, 161);
+  fill(s);
+  noStroke();
+  circle(circleX, circleY, circleR);
   }
   else if (dayNight === 1) {
-    background(235, 165, 86);
+    background(255, 180, 100);
+      // sun/moon
+  let s = color(250, 241, 161);
+  fill(s);
+  noStroke();
+  circle(circleX, circleY, circleR);
   }
   else if (dayNight === 2) {
     background(2, 22, 91);
+      // sun/moon
+  let s = color(255, 255, 255);
+  fill(s);
+  noStroke();
+  circle(circleX, circleY, circleR);
   }
-
-  ghost();
 
   //Floor
   let g = color(95, 70, 44);
   fill(g);
   noStroke();
   rect(0, height - height / 12, width, height / 10);
-
-  // sun/moon
-  let s = color(250, 241, 161);
-  fill(s);
-  noStroke();
-  circle(circleX, circleY, circleR);
 
   // House
   let h = color(247, 147, 247);
@@ -112,6 +119,9 @@ function draw() {
   fill(r);
   triangle(tx1, ty1, tx2, ty2, tx3, ty3);
   rect(tx2 - doorWidth / 3.2, houseY + 50, houseWidth / 3, houseHeight - 20);
+
+  //Ghost
+  ghost();
 
   //bushes
   let b = color(21, 131, 25);
@@ -132,17 +142,13 @@ function ghost() {
   circle(mouseX, mouseY, ghostR);
   rect(P, mouseY, ghostR, ghostR / 2);
 
-  rect(P, mouseY, 5, 65);
-  rect(P + 15, mouseY, 5, 65);
-  rect(P + 30, mouseY, 5, 65);
-  rect(P + 45, mouseY, 5, 65);
-  rect(P + 60, mouseY, 5, 65);
-  rect(P + 75, mouseY, 5, 65);
+  rect(P, mouseY, 5, ghostR/1.23);
+  rect(P + ghostR - 5, mouseY, 5, ghostR/1.23);
 
   let e = color(0, 0, 0);
   fill(e);
-  circle(mouseX - (ghostR / 4), mouseY, 10);
-  circle(mouseX + (ghostR / 4), mouseY, 10);
+  circle(mouseX - (ghostR / 4), mouseY, ghostR/8);
+  circle(mouseX + (ghostR / 4), mouseY, ghostR/8);
   rect(mouseX - (ghostR / 4), mouseY + (ghostR / 4), ghostR / 2, 5);
 }
 
