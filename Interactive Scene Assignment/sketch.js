@@ -48,7 +48,7 @@ async function setup() {
   houseX = width - width / 2.5;
   houseY = height - height / 3;
   houseWidth = width / 4;
-  houseHeight = width / 4;
+  houseHeight = height / 4;
   doorWidth = houseWidth / 2;
 
   //Roof
@@ -80,27 +80,27 @@ function draw() {
   keyPressed()
   if (dayNight === 0) {
     background(141, 196, 252);
-      // sun/moon
-  let s = color(250, 241, 161);
-  fill(s);
-  noStroke();
-  circle(circleX, circleY, circleR);
+    // sun/moon
+    let s = color(250, 241, 161);
+    fill(s);
+    noStroke();
+    circle(circleX, circleY, circleR);
   }
   else if (dayNight === 1) {
     background(255, 180, 100);
-      // sun/moon
-  let s = color(250, 241, 161);
-  fill(s);
-  noStroke();
-  circle(circleX, circleY, circleR);
+    // sun/moon
+    let s = color(250, 241, 161);
+    fill(s);
+    noStroke();
+    circle(circleX, circleY, circleR);
   }
   else if (dayNight === 2) {
     background(2, 22, 91);
-      // sun/moon
-  let s = color(255, 255, 255);
-  fill(s);
-  noStroke();
-  circle(circleX, circleY, circleR);
+    // sun/moon
+    let s = color(255, 255, 255);
+    fill(s);
+    noStroke();
+    circle(circleX, circleY, circleR);
   }
 
   //Floor
@@ -128,7 +128,8 @@ function draw() {
   fill(b);
   bushes();
 
-  fill(g)
+  //Artist's Mark
+  fill(255)
   text('Dara', width - 40, height - 20);
 
 }
@@ -142,40 +143,25 @@ function ghost() {
   circle(mouseX, mouseY, ghostR);
   rect(P, mouseY, ghostR, ghostR / 2);
 
-  rect(P, mouseY, 5, ghostR/1.23);
-  rect(P + ghostR - 5, mouseY, 5, ghostR/1.23);
+  rect(P, mouseY, 5, ghostR / 1.23);
+  rect(P + ghostR - 5, mouseY, 5, ghostR / 1.23);
 
   let e = color(0, 0, 0);
   fill(e);
-  circle(mouseX - (ghostR / 4), mouseY, ghostR/8);
-  circle(mouseX + (ghostR / 4), mouseY, ghostR/8);
+  circle(mouseX - (ghostR / 4), mouseY, ghostR / 8);
+  circle(mouseX + (ghostR / 4), mouseY, ghostR / 8);
   rect(mouseX - (ghostR / 4), mouseY + (ghostR / 4), ghostR / 2, 5);
 }
 
 function keyPressed() {
-  //this function calls automatically
-  // - for single press captures
-  if(key==="a"){
+  //Updates dayNight
+  if (key === "a") {
     dayNight = 1;
   }
-  else if (key==="s"){
+  else if (key === "s") {
     dayNight = 2;
   }
-  else if(keyCode===32){ //space 
+  else if (keyCode === 32) { //space 
     dayNight = 0;
   }
 }
-
-// function colorPatern() {
-//   switch (dayNight) {
-//     case 0:
-//       background(141, 196, 252);
-//       break;
-//     case 1:
-//       background();
-//       break;
-//     case 2:
-//       background();
-//       break;
-//   }
-// }
