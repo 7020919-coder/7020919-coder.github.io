@@ -7,6 +7,8 @@
 
 //Global variables
 let dayNight = 0;
+let q = color(141, 196, 252);
+let s;
 
 // let groundX = 0;
 // let groundY = height-100;
@@ -156,12 +158,39 @@ function ghost() {
 function keyPressed() {
   //Updates dayNight
   if (key === "a") {
-    dayNight = 1;
+    q = color(141, 196, 252);
   }
   else if (key === "s") {
-    dayNight = 2;
+    q = color(255, 180, 100);
   }
   else if (keyCode === 32) { //space 
-    dayNight = 0;
+    q = color(2, 22, 91);
   }
 }
+
+
+
+// if (dayNight === 0) {
+//     background(141, 196, 252);
+//     // sun/moon
+//     let s = color(250, 241, 161);
+//     fill(s);
+//     noStroke();
+//     circle(circleX, circleY, circleR);
+//   }
+//   else if (dayNight === 1) {
+//     background(255, 180, 100);
+//     // sun/moon
+//     let s = color(250, 241, 161);
+//     fill(s);
+//     noStroke();
+//     circle(circleX, circleY, circleR);
+//   }
+//   else if (dayNight === 2) {
+//     background();
+//     // sun/moon
+//     let s = color(255, 255, 255);
+//     fill(s);
+//     noStroke();
+//     circle(circleX, circleY, circleR);
+//   }
