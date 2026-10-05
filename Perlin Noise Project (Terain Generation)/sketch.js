@@ -11,6 +11,8 @@ let h;
 let xTime = 5; 
 let xSpeed = 0.01;
 let xStart = xTime;
+let flagX;
+let flagY;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -23,6 +25,7 @@ function draw() {
   xTime = xStart;
   xStart += xSpeed;
   generateTerrain();
+
 }
 
 function keyPressed(){
@@ -39,16 +42,20 @@ function keyPressed(){
 }
 
 function generateTerrain(){
-//  w = 2;
   for(let x = 0; x < width; x+= w){
     h = noise(xTime); //0-1
     h = map(h, 0, 1, 0, width);
     xTime += xSpeed;
     rect(x, height, w, h*-1);
-   
+
   }
+
 }
 
-// function drawFlag(){
+function drawFlag(){
+  rect(flagX, flagY, 5, 40);
+  fill("red");
+  triangle(flagX+5, flagY, flagX+5, flagY+20, flagX+25, flagY+10);
+  fill("black");
+}
 
-// }
