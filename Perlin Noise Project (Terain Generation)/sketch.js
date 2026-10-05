@@ -42,12 +42,18 @@ function keyPressed(){
 }
 
 function generateTerrain(){
+  let tall = -1;
+
+
   for(let x = 0; x < width; x+= w){
     h = noise(xTime); //0-1
     h = map(h, 0, 1, 0, width);
     xTime += xSpeed;
     rect(x, height, w, h*-1);
 
+    if(tall<h){
+      
+    }
   }
 
 }
