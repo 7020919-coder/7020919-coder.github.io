@@ -23,7 +23,7 @@ async function setup() {
 
 function draw() {
   //basic detup
-  background(220);
+  background(255, 124, 48);
   fill(0);
 
   //pan effect
@@ -37,12 +37,12 @@ function draw() {
 }
 
 function keyPressed(){
-  if(keyCode === 37){ //Left Arrow reduce width
+  if(keyCode === 37){ //Left Arrow <- reduce width
     if(w>=2){
       w -= 1;
     }
   }
-  else if(keyCode === 39){ //Right Arrow increase width
+  else if(keyCode === 39){ //Right Arrow -> increase width
     if(w<20){
       w += 1;
     }
