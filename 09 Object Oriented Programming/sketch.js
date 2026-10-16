@@ -19,8 +19,8 @@ async function setup() {
   //create a single book
   myBook = new Book("CS30 Text", "Mr. Scott", 1234567098765, "leatherbound", 500, spot);
   myBook2 = new Book("Alice in Wonderland", "Charles Darwin", 1987654321233, "softcover", 300,
-    spot);
-  myBook3 = new Book("Room", "Emma Donald", 2356891245780, "hardcover", 600, spot);
+    spot+50);
+  myBook3 = new Book("Room", "Emma Donald", 2356891245780, "hardcover", 600, spot+100);
 }
 
 function draw() {
@@ -68,6 +68,5 @@ class Book{
     rect(this.x, height/2, this.pages/10, 150);
     fill(255);
     text(this.title[0], this.x, height/2+50);
-    spot += this.pages/10;
   }
 }
