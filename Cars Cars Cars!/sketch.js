@@ -7,6 +7,7 @@
 
 
 let vehicleArray = [];
+let typeChoices = [0, 1];
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -16,9 +17,10 @@ async function setup() {
 function draw() {
   background(220);
   drawRoad();
-  for(n of vehicleArray){
+  for (n of vehicleArray) {
     n.action();
   }
+  // frameRate(10);
 }
 
 
@@ -41,15 +43,15 @@ function drawRoad() {
   fill(0);
 }
 
-function mousePressed(){
-  if(mouseButton.left){
-    if(keyIsDown("shift")){
-      vehicleArray.push(new vehicle(0, 0, 10));
-    }
-    else{
-      vehicleArray.push(new vehicle(0, 1, 10));
-    }
+function mousePressed() {
+  // if(mouseButton.left){
+  if (keyIsDown(SHIFT)) {
+    vehicleArray.push(new vehicle(0, 0, 10));
   }
+  else {
+    vehicleArray.push(new vehicle(0, 1, 10));
+  }
+  // }
 }
 
 class vehicle {
@@ -60,12 +62,12 @@ class vehicle {
     this.direction = direction;
     if (direction === 0) {
       this.x = width - 15;
-      this.y = random(8 + height * 0.25, -8 + height * 0.5);
+      this.y = random(10 + height * 0.25, -10 + height * 0.5);
       this.xSpeed = -xSpeed;
     }
     else if (direction === 1) {
       this.x = 17.5;
-      this.y = random(8 + height * 0.5, -8 +height * 0.75);
+      this.y = random(10 + height * 0.5, -10 + height * 0.75);
       this.xSpeed = xSpeed;
     }
   }
@@ -84,46 +86,46 @@ class vehicle {
     }
     else if (this.type === 1) {
       rect(this.x, this.y, 40, 30);
-      rect(this.x+20, this.y, 10, 30);
+      rect(this.x + 20, this.y, 10, 30);
     }
   }
 
-  move(){
+  move() {
     this.x += this.xSpeed;
-    if(this.x > width){
-      this.x = 0;
+    if (this.x > width) {
+      this.x = -10;
     }
-    else if(this.x < 0){
-      this.x = width;
+    else if (this.x < 0) {
+      this.x = width-10;
     }
   }
 
-  speedUp(){
-    if(this.xSpeed < 1){
+  speedUp() {
+    if (this.xSpeed < 1) {
       this.xSpeed -= 5;
     }
-    else{
+    else {
       this.xSpeed += 5;
     }
   }
 
-  speedDown(){
-    if(this.xSpeed < 1){
+  speedDown() {
+    if (this.xSpeed < 1) {
       this.xSpeed += 5;
     }
-    else{
+    else {
       this.xSpeed -= 5;
     }
   }
 
-  changeColor(){
+  changeColor() {
     let chance = random(100);
-    if(chance < 1){
+    if (chance < 1) {
       this.c = color(random(255), random(255), random(255));
     }
   }
 
-  action(){
+  action() {
     this.move();
     this.changeColor();
     this.display();
