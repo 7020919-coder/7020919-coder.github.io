@@ -5,15 +5,17 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-
+let freeze = false;
 let vehicleArray = [];
 let typeChoices = [0, 1];
 let chance;
+let myFrameCount = 0;
 
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   // test = new vehicle(0, 0, 3);
+  traffic = new TrafficLight(100, 100);
 }
 
 function draw() {
@@ -22,6 +24,8 @@ function draw() {
   for (n of vehicleArray) {
     n.action();
   }
+  traffic.time();
+  traffic.display();
   // frameRate(10);
 }
 
@@ -48,10 +52,10 @@ function drawRoad() {
 function mousePressed() {
   // if(mouseButton.left){
   if (keyIsDown(SHIFT)) {
-    vehicleArray.push(new vehicle(random(typeChoices), 0, 6));
+    vehicleArray.push(new vehicle(random(typeChoices), 0, 5));
   }
   else {
-    vehicleArray.push(new vehicle(random(typeChoices), 1, 6));
+    vehicleArray.push(new vehicle(random(typeChoices), 1, 5));
   }
   // }
 }
@@ -59,8 +63,10 @@ function mousePressed() {
 function keyPressed() {
   if (keyCode === 32) {
     freeze = true;
+    myFrameCount = 0;
   }
 }
+
 class vehicle {
   //1. Constructor
   constructor(type, direction, xSpeed) {
@@ -83,27 +89,28 @@ class vehicle {
   display() {
     fill(this.c);
     if (this.type === 0) {
-      rect(this.x, this.y, 35, 15);
+      rect(this.x, this.y, 35, 15); //car body
       fill(255);
-      rect(this.x - 10, this.y + 10, 10, 4);
+      rect(this.x - 10, this.y + 10, 10, 4); //car wheels
       rect(this.x + 10, this.y + 10, 10, 4);
       rect(this.x - 10, this.y - 10, 10, 4);
       rect(this.x + 10, this.y - 10, 10, 4);
       // fill(this.c);
     }
     else if (this.type === 1) {
-      rect(this.x, this.y, 40, 30);
+      rect(this.x, this.y, 40, 30); //truck body
       if (this.direction === 0) {
-        rect(this.x - 30, this.y, 10, 30);
+        rect(this.x - 30, this.y, 10, 30); //truck head (left)
       }
       else {
-        rect(this.x + 30, this.y, 10, 30);
+        rect(this.x + 30, this.y, 10, 30); //truck head (right)
       }
     }
   }
 
   move() {
     this.x += this.xSpeed;
+    //wrap around feature
     if (this.x > width) {
       this.x = 0;
     }
@@ -113,11 +120,11 @@ class vehicle {
   }
 
   speedUp() {
-    if (this.direction === 0 && this.xSpeed > -15) {
-      this.xSpeed -= 2;
+    if (this.direction === 0 && this.xSpeed > -14) { 
+      this.xSpeed -= 1;
     }
-    else if (this.direction === 1 && this.xSpeed < 15) {
-      this.xSpeed += 2;
+    else if (this.direction === 1 && this.xSpeed < 14) {
+      this.xSpeed += 1;
     }
   }
 
@@ -140,10 +147,14 @@ class vehicle {
       chance = random(100);
       if (chance < 1) {
         this.speedUp();
+        // console.log(this.xSpeed);
+
       }
       chance = random(100);
       if (chance < 1) {
         this.speedDown();
+        // console.log(this.xSpeed);
+
       }
       chance = random(100);
       if (chance < 1) {
@@ -152,9 +163,14 @@ class vehicle {
     }
     this.display();
   }
+
 }
 
 class TrafficLight {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
   display() {
     if (freeze) {
       fill("red");
@@ -162,6 +178,15 @@ class TrafficLight {
     else {
       fill("green");
     }
-    circle(50, 50, 100);
+    circle(this.x, this.y, 100);
+  }
+  time(){
+    if(myFrameCount === 120){
+      myFrameCount = 0;
+      freeze = false;  
+    }
+    else{
+      myFrameCount ++;
+    } 
   }
 }
