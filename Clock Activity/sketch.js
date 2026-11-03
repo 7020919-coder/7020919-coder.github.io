@@ -7,9 +7,21 @@
 
 
 async function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(400, 400);
 }
+
+
 
 function draw() {
   background(220);
+
+
+  push();
+  translate(200, 200);
+  circle(0, 0, 250);
+  line(0,-120,0,-80);
+  pop();
+
 }
+
+
