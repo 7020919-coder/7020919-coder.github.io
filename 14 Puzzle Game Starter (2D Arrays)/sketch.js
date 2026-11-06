@@ -5,6 +5,10 @@
 // grid sized 6 x 5
 // 0 (black)    255 (white)
 
+// let gridChoices = random([0, 255]);
+let flipChoice = 0;
+let win = false;
+
 let grid = [
   [0, 255, 0, 255, 0, 255],
   [255, 0, 255, 0, 255, 0],
@@ -17,17 +21,23 @@ let rows = grid.length;
 let columns = grid[0].length;
 const tileSize = 60;
 
-let win = false;
 
 async function setup() {
+  randomiseStart();
   createCanvas(columns * tileSize, rows * tileSize);
 }
 
+function randomiseStart(){
+  for (let y = 0; y < rows; y++) {//y: 01234
+    for (let x = 0; x < columns; x++) {//x: 012345
+      grid[y][x] = random([0,255]);
+    }
+  }
+}
+
 function draw() {
-  background(220);
+  background(220);    
   renderGrid();
-  getCurrentX();
-  getCurrentY();
   checkWinner();
 }
 
@@ -53,6 +63,30 @@ function flip(x, y) {
   }
 }
 
+function colouredOverlay() {
+  if (mouseX < width && mouseY < height) {
+    let a = getCurrentX();
+    let b = getCurrentY();
+
+    let checkColour = color(153, 255, 153, 80);
+    fill(checkColour);
+    square(a * tileSize, b * tileSize, tileSize);
+
+    if (flipChoice === 0 && !keyIsDown(SHIFT)) {//cross option
+      square((a + 1) * tileSize, b * tileSize, tileSize);
+      square((a - 1) * tileSize, b * tileSize, tileSize);
+      square(a * tileSize, (b - 1) * tileSize, tileSize);
+      square(a * tileSize, (b + 1) * tileSize, tileSize);
+    }
+    else if (flipChoice === 1 && !keyIsDown(SHIFT)) { //square option
+      square(a * tileSize, b * tileSize, tileSize);
+      square(a * tileSize, (b + 1) * tileSize, tileSize);
+      square((a + 1) * tileSize, b * tileSize, tileSize);
+      square((a + 1) * tileSize, (b + 1) * tileSize, tileSize);
+    }
+  }
+}
+
 function mousePressed() {
   //only do a flip if mouse is on the cavas
   if (mouseX < width && mouseY < height) {
@@ -63,24 +97,48 @@ function mousePressed() {
     flip(x, y);
 
     //IF THEY EXIST:
-    //flip the cardinal neighbours (NSEW)
     if (!keyIsDown(SHIFT)) {
-      if (x - 1 >= 0) {
-        flip(x - 1, y);
-      }
-      if (y - 1 >= 0) {
-        flip(x, y - 1);
-      }
-      if (x < 5) {
-        flip(x + 1, y);
-      }
-      if (y < 4) {
-        flip(x, y + 1);
+      //flip the cardinal neighbours (NSEW)
+      if (flipChoice === 0) { //Cross Flip
+        if (x - 1 >= 0) {
+          flip(x - 1, y);
+        }
+        if (y - 1 >= 0) {
+          flip(x, y - 1);
+        }
+        if (x < 5) {
+          flip(x + 1, y);
+        }
+        if (y < 4) {
+          flip(x, y + 1);
+        }
+      } 
+      else if (flipChoice === 1) { //Square Flip
+        if (x < 5) {
+          flip(x + 1, y);
+        }
+        if (y < 4) {
+          flip(x, y + 1);
+        }
+        if (x < 5 && y < 4) {
+          flip(x + 1, y + 1);
+        }
       }
     }
   }
 
 
+}
+
+function keyPressed(){
+  if(keyCode === 32){
+    if(flipChoice === 0){
+      flipChoice = 1;
+    }
+    else{
+      flipChoice = 0;
+    }
+  }
 }
 
 function checkWinner() {
@@ -99,7 +157,7 @@ function checkWinner() {
   if (black === 30 || white === 30) {
     win === true;
     textAlign(CENTER, CENTER);
-    textSize(80);
+    textSize(60);
     fill("green");
     text("You Win!", width / 2, height / 2);
   }
@@ -114,4 +172,5 @@ function renderGrid() {
       square(x * tileSize, y * tileSize, tileSize);
     }
   }
+  colouredOverlay();
 }
