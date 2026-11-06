@@ -6,33 +6,112 @@
 // 0 (black)    255 (white)
 
 let grid = [
-  [0,    255,  0,    255,  0,  255],
-  [255,  0,    255,  0,    255,  0],
-  [255,  255,  255,  255,  255,  255],
-  [0,    0,    0,    0,    0,    0],
-  [255,  255,  0,    255,  255,  0],
+  [0, 255, 0, 255, 0, 255],
+  [255, 0, 255, 0, 255, 0],
+  [255, 255, 255, 255, 255, 255],
+  [0, 0, 0, 0, 0, 0],
+  [255, 255, 0, 255, 255, 0],
 ];
 
 let rows = grid.length;
 let columns = grid[0].length;
 const tileSize = 60;
 
+let win = false;
+
 async function setup() {
-  createCanvas(columns*tileSize, rows*tileSize);
+  createCanvas(columns * tileSize, rows * tileSize);
 }
 
 function draw() {
   background(220);
   renderGrid();
+  getCurrentX();
+  getCurrentY();
+  checkWinner();
 }
 
-function renderGrid(){
+function getCurrentX() {
+  //determine current col position of mouse
+  let constrainedX = constrain(mouseX, 0, width - 1);
+  return int(constrainedX / tileSize);
+}
+
+function getCurrentY() {
+  //determine current col position of mouse
+  let constrainedY = constrain(mouseY, 0, height - 1);
+  return int(constrainedY / tileSize);
+}
+
+function flip(x, y) {
+  //flip the tile at position (x, y)
+  if (grid[y][x] === 255) {
+    grid[y][x] = 0;
+  }
+  else {
+    grid[y][x] = 255;
+  }
+}
+
+function mousePressed() {
+  //only do a flip if mouse is on the cavas
+  if (mouseX < width && mouseY < height) {
+    let x = getCurrentX();
+    let y = getCurrentY();
+
+    //ALWAYS:
+    flip(x, y);
+
+    //IF THEY EXIST:
+    //flip the cardinal neighbours (NSEW)
+    if (!keyIsDown(SHIFT)) {
+      if (x - 1 >= 0) {
+        flip(x - 1, y);
+      }
+      if (y - 1 >= 0) {
+        flip(x, y - 1);
+      }
+      if (x < 5) {
+        flip(x + 1, y);
+      }
+      if (y < 4) {
+        flip(x, y + 1);
+      }
+    }
+  }
+
+
+}
+
+function checkWinner() {
+  let black = 0;
+  let white = 0;
+  for (let y = 0; y < rows; y++) {//y: 01234
+    for (let x = 0; x < columns; x++) {//x: 012345
+      if (grid[y][x] === 0) {
+        black += 1;
+      }
+      else {
+        white += 1;
+      }
+    }
+  }
+  if (black === 30 || white === 30) {
+    win === true;
+    textAlign(CENTER, CENTER);
+    textSize(80);
+    fill("green");
+    text("You Win!", width / 2, height / 2);
+  }
+}
+
+function renderGrid() {
   // interpretes the data stored in 2D array and draws a matrix of squares to reflect it
-  for(let y = 0; y < rows; y++){//y: 01234
-    for(let x = 0; x < columns; x++){//x: 012345
+  for (let y = 0; y < rows; y++) {//y: 01234
+    for (let x = 0; x < columns; x++) {//x: 012345
       let fillColour = grid[y][x];
       fill(fillColour);
-      square(x*tileSize, y*tileSize, tileSize);
+      square(x * tileSize, y * tileSize, tileSize);
     }
   }
 }
