@@ -79,7 +79,6 @@ function colouredOverlay() {
       square(a * tileSize, (b + 1) * tileSize, tileSize);
     }
     else if (flipChoice === 1 && !keyIsDown(SHIFT)) { //square option
-      square(a * tileSize, b * tileSize, tileSize);
       square(a * tileSize, (b + 1) * tileSize, tileSize);
       square((a + 1) * tileSize, b * tileSize, tileSize);
       square((a + 1) * tileSize, (b + 1) * tileSize, tileSize);
