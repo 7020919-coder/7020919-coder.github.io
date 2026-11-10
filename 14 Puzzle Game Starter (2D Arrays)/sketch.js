@@ -28,6 +28,7 @@ async function setup() {
 }
 
 function randomiseStart(){
+  //runs through grid values and randomly redefines each value 0 or 255
   for (let y = 0; y < rows; y++) {//y: 01234
     for (let x = 0; x < columns; x++) {//x: 012345
       grid[y][x] = random([0,255]);
@@ -97,8 +98,8 @@ function mousePressed() {
 
     //IF THEY EXIST:
     if (!keyIsDown(SHIFT)) {
-      //flip the cardinal neighbours (NSEW)
-      if (flipChoice === 0) { //Cross Flip
+      
+      if (flipChoice === 0) { //Cross Flip (NSEW)
         if (x - 1 >= 0) {
           flip(x - 1, y);
         }
@@ -112,6 +113,7 @@ function mousePressed() {
           flip(x, y + 1);
         }
       } 
+
       else if (flipChoice === 1) { //Square Flip
         if (x < 5) {
           flip(x + 1, y);
@@ -130,7 +132,8 @@ function mousePressed() {
 }
 
 function keyPressed(){
-  if(keyCode === 32){
+  //toggle cross fip and square flip with spacebar
+  if(keyCode === 32){ 
     if(flipChoice === 0){
       flipChoice = 1;
     }
@@ -141,6 +144,8 @@ function keyPressed(){
 }
 
 function checkWinner() {
+  //counts black and white tiles to check if the total number of one colour tile is the the
+  //same number as the total count of tiles on screen.
   let black = 0;
   let white = 0;
   for (let y = 0; y < rows; y++) {//y: 01234
@@ -153,7 +158,8 @@ function checkWinner() {
       }
     }
   }
-  if (black === 30 || white === 30) {
+  //checks if win condition is met, then displays "You Win" in green.
+  if (black === 30 || white === 30) { 
     win === true;
     textAlign(CENTER, CENTER);
     textSize(60);
